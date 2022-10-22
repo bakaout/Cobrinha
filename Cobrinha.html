@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cobrinha</title>
+    <style>
+        #tela{
+        }
+    </style>
 </head>
 <body>
     
@@ -14,13 +18,43 @@
 
         window.onload = function(){// quando a janela for carregada, tudo dentro das chaves{} vai ser executado
 
-            var tela = document.getElementById("tela")//pegando o valor do id tela para poder usar dentro da função
-            var ctx = stage.getContext("2d")
+
+            context.fillStyle = "black"// escolhendo a cor da tela
+            context.fillRect(0, 0, tela.width, tela.height)// preenchendo todo o espaço da "tela"
+
+            setInterval(game, 60)// a cada 60 miliSegundos a função game é chamada
+
+            const veloc = 1 //velocidade da cobrinha
+
+            var velX = velY = 0 //velocidade X e Y recebem 0
+
+            var posX = posY = 10 //a posição que vamos começar
+
+            var head = 10 //cabeça da cobrinha
+
+            var quantQuadrado = 20 // 20*20 = 400 (que é o tamanho da tela)
+
+            var appleX = appleY = 15 // posição da primeira maçã
+
+                
+            var rastro = []//rastro, tamanho que a cobrinha pode ficar
+            tail = 5 // calda inicial da cobra
+
+            function game(){
+                
+                posX += velX// posição X recebe velocidade X
+                posY += velY// posição Y recebe velocidade Y
+                
+                if (posX < 0){//se a posX for menor que 0, ela vai receber a quantidade de quadrado(20) menos -1
+                    posX = quantQuadrado -1
+                }                
+                //a cada 60 miliSegundos a tela sera atualizada
+                var tela = document.getElementById('tela')//pegando o valor do id tela para poder usar dentro da função
+                var context = tela.getContext("2d")
+            }
 
 
         }
-
-
     </script>
 
 </body>
