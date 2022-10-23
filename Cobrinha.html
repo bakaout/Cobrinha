@@ -15,13 +15,11 @@
     <!---->
     <canvas id="tela" width="400" height="400"></canvas> <!--tela de fundo / a base do jogo-->
     <script type="text/javascript">//declarando o tipo de texto
+        var tela = document.getElementById('tela')//pegando o valor do id tela para poder usar dentro da função
+        var context = tela.getContext("2d")
 
         window.onload = function(){// quando a janela for carregada, tudo dentro das chaves{} vai ser executado
-
-
-            context.fillStyle = "black"// escolhendo a cor da tela
-            context.fillRect(0, 0, tela.width, tela.height)// preenchendo todo o espaço da "tela"
-
+            
             setInterval(game, 60)// a cada 60 miliSegundos a função game é chamada
 
             const veloc = 1 //velocidade da cobrinha
@@ -32,6 +30,8 @@
 
             var head = 10 //cabeça da cobrinha
 
+            var tamQuadrado = 20 // tamanho do quadradinhos dentro do quadrado
+            
             var quantQuadrado = 20 // 20*20 = 400 (que é o tamanho da tela)
 
             var appleX = appleY = 15 // posição da primeira maçã
@@ -45,12 +45,37 @@
                 posX += velX// posição X recebe velocidade X
                 posY += velY// posição Y recebe velocidade Y
                 
+                //se a cobrinha passar da borda da esquerda, ela vai pro outro lado, na borda da direita
                 if (posX < 0){//se a posX for menor que 0, ela vai receber a quantidade de quadrado(20) menos -1
                     posX = quantQuadrado -1
-                }                
+                } 
+                if(posX > quantQuadrado -1){
+                    posX = 0
+                }
+                if(posY < 0){
+                    posY = quantQuadrado-1
+                }
+                if (posY > quantQuadrado -1) {
+                    posY = 0
+                }
                 //a cada 60 miliSegundos a tela sera atualizada
-                var tela = document.getElementById('tela')//pegando o valor do id tela para poder usar dentro da função
-                var context = tela.getContext("2d")
+                context.fillStyle = "black"// escolhendo a cor da tela
+                context.fillRect(0, 0, tela.width, tela.height)// preenchendo todo o espaço da "tela"
+
+                context.fillStyle = "red"//cor da maça
+                //preenchendo o tamanho e cor da maça 
+                context.fillRect(appleX*tamQuadrado, appleY*tamQuadrado, tamQuadrado, tamQuadrado)
+    
+                context.fillStyle = "gray"//cor da cobrinha
+                for (let i = 0; i < rastro.length; i++) {
+                    context.fillRect(rastro[i].x*tamQuadrado, rastro[i].y*tamQuadrado, tamQuadrado, tamQuadrado)
+                    if(rastro[1].x == posX && rastro[i].y == posY){
+                        velX = velY = 0 //se o o rastro da cobra for igual as posições dela
+                        //a velocidade muda para 0 fazendo com que ela pare
+                    }
+                
+                }
+
             }
 
 
